@@ -33,6 +33,9 @@ public class MainActivity extends AppCompatActivity {
 
         Intent intent = new Intent(this, SecondActivity.class);
         intent.putExtra("lab", 69);
+        intent.putExtra("bool", true);
+        intent.putExtra("string", "string");
+        intent.putExtra("float", 4.20F);
         startActivity(intent);
     }
 }

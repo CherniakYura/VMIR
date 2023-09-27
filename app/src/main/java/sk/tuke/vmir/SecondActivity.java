@@ -15,6 +15,10 @@ public class SecondActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         int labNum = intent.getIntExtra("lab", 0);
-        Toast.makeText(this, "Second one is created: " + labNum, Toast.LENGTH_SHORT).show();
+        boolean bool = intent.getBooleanExtra("bool", false);
+        String string = intent.getStringExtra("string");
+        Float labFloat = intent.getFloatExtra("float", 0.9F);
+
+        Toast.makeText(this, "Second one is created: " + labNum + " " + bool + " " + string + " " + labFloat, Toast.LENGTH_SHORT).show();
     }
 }
