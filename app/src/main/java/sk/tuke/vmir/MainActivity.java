@@ -2,6 +2,8 @@ package sk.tuke.vmir;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -28,5 +30,9 @@ public class MainActivity extends AppCompatActivity {
         TextView label = (TextView) findViewById(R.id.label);
         label.setText(isTextOn ? "Lorem ipsum" : "Not lorem ipsum");
         isTextOn = !isTextOn;
+
+        Intent intent = new Intent(this, SecondActivity.class);
+        intent.putExtra("lab", 69);
+        startActivity(intent);
     }
 }
