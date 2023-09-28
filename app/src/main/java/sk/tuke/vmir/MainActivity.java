@@ -26,16 +26,16 @@ public class MainActivity extends AppCompatActivity {
         Toast.makeText(this, "OnCreate is called.", Toast.LENGTH_SHORT).show();
     }
 
-    public void pressAction(View view) {
-        TextView label = (TextView) findViewById(R.id.label);
-        label.setText(isTextOn ? "Lorem ipsum" : "Not lorem ipsum");
-        isTextOn = !isTextOn;
-
-        Intent intent = new Intent(this, SecondActivity.class);
-        intent.putExtra("lab", 69);
-        intent.putExtra("bool", true);
-        intent.putExtra("string", "string");
-        intent.putExtra("float", 4.20F);
-        startActivity(intent);
-    }
+//    public void pressAction(View view) {
+//        TextView label = (TextView) findViewById(R.id.label);
+//        label.setText(isTextOn ? "Lorem ipsum" : "Not lorem ipsum");
+//        isTextOn = !isTextOn;
+//
+//        Intent intent = new Intent(this, SecondActivity.class);
+//        intent.putExtra("lab", 69);
+//        intent.putExtra("bool", true);
+//        intent.putExtra("string", "string");
+//        intent.putExtra("float", 4.20F);
+//        startActivity(intent);
+//    }
 }
