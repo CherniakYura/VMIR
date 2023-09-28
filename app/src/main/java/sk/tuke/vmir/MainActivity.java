@@ -45,21 +45,21 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         Log.i(TAG, "Starting App...");
-
-        scoreTextView = findViewById(R.id.score_text_view);
-        timeTextView = findViewById(R.id.time_text_view);
-        drawView = findViewById(R.id.draw_view);
-        drawView.callback = new UpdateCountCallback() {
-            @Override
-            public void update() {
-                updateScore();
-            }
-        };
-
-        score = 0;
-        finish = System.currentTimeMillis() + 1000 * 10;
-
-        timerHandler.postDelayed(timerRunnable, 0);
+//
+//        scoreTextView = findViewById(R.id.score_text_view);
+//        timeTextView = findViewById(R.id.time_text_view);
+//        drawView = findViewById(R.id.draw_view);
+//        drawView.callback = new UpdateCountCallback() {
+//            @Override
+//            public void update() {
+//                updateScore();
+//            }
+//        };
+//
+//        score = 0;
+//        finish = System.currentTimeMillis() + 1000 * 10;
+//
+//        timerHandler.postDelayed(timerRunnable, 0);
     }
 
     public void updateScore() {
