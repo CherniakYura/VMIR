@@ -1,8 +1,11 @@
 package sk.tuke.vmir;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -11,33 +14,20 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import java.util.Timer;
-import java.util.TimerTask;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
+import android.Manifest;
 
 
 public class MainActivity extends AppCompatActivity {
     public String TAG = "MainActivity";
-    public boolean isTextOn = false;
-    private TextView scoreTextView;
-    private TextView timeTextView;
-    private DrawView drawView;
+    private Button callBtn;
+    private Button backspace;
+    private String numberStr = "";
+    private TextView numberView;
 
-    private int score;
-    private long finish;
-
-    Handler timerHandler = new Handler();
-    Runnable timerRunnable = new Runnable() {
-
-        @Override
-        public void run() {
-            updateTime();
-            timerHandler.postDelayed(this, 1000);
-        }
-    };
+    public void setNumberStr(String s) {
+        numberStr = s;
+        updateNum();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,48 +35,62 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         Log.i(TAG, "Starting App...");
-//
-//        scoreTextView = findViewById(R.id.score_text_view);
-//        timeTextView = findViewById(R.id.time_text_view);
-//        drawView = findViewById(R.id.draw_view);
-//        drawView.callback = new UpdateCountCallback() {
-//            @Override
-//            public void update() {
-//                updateScore();
-//            }
-//        };
-//
-//        score = 0;
-//        finish = System.currentTimeMillis() + 1000 * 10;
-//
-//        timerHandler.postDelayed(timerRunnable, 0);
+
+        callBtn = (Button) findViewById(R.id.callBtn);
+        numberView = (TextView) findViewById(R.id.textView);
+
+        Activity main = this;
+        callBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (ActivityCompat.checkSelfPermission(main, Manifest.permission.CALL_PHONE) == PackageManager.PERMISSION_GRANTED) {
+                    makeCall();
+                } else {
+                    ActivityCompat.requestPermissions(main, new String[]{Manifest.permission.CALL_PHONE}, 1);
+                }
+            }
+        });
+
+        backspace = (Button) findViewById(R.id.backspace);
+        backspace.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (numberStr != null && numberStr.length() > 0) {
+                    setNumberStr(numberStr.substring(0, numberStr.length() - 1));
+                }
+            }
+        });
     }
 
-    public void updateScore() {
-        score++;
-        scoreTextView.setText("Score: " + String.valueOf(score));
-    }
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
-    public void updateTime() {
-        long currentTime = System.currentTimeMillis();
-        long elapsedTime = finish - currentTime;
-        if (elapsedTime >= 0) {
-            timeTextView.setText("Time left: 00:" + String.format("%02d", elapsedTime / 1000));
-            return;
+        switch (requestCode) {
+            case 1: {
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    makeCall();
+                } else {
+                    Toast.makeText(MainActivity.this, "Permission denied.", Toast.LENGTH_SHORT).show();
+                }
+            }
         }
-        drawView.finished = true;
     }
 
-//    public void pressAction(View view) {
-//        TextView label = (TextView) findViewById(R.id.label);
-//        label.setText(isTextOn ? "Lorem ipsum" : "Not lorem ipsum");
-//        isTextOn = !isTextOn;
-//
-//        Intent intent = new Intent(this, SecondActivity.class);
-//        intent.putExtra("lab", 69);
-//        intent.putExtra("bool", true);
-//        intent.putExtra("string", "string");
-//        intent.putExtra("float", 4.20F);
-//        startActivity(intent);
-//    }
+    public void makeCall() {
+        Intent callIntent = new Intent(Intent.ACTION_CALL);
+        callIntent.setData(Uri.parse("tel:" + numberStr));
+        startActivity(callIntent);
+    }
+
+    public void addNum(View v) {
+        String buttonText = ((Button) v).getText().toString();
+        setNumberStr(numberStr + buttonText);
+    }
+
+
+    public void updateNum() {
+        numberView.setText(numberStr);
+    }
+
 }
