@@ -38,6 +38,7 @@ public class DirectorAdapter extends RecyclerView.Adapter<DirectorHolder> {
     @Override
     public void onBindViewHolder(@NonNull DirectorHolder directorHolder, int i) {
         Director director = _data.get(i).director;
+        ArrayList<Movie> movies = new ArrayList<>(_data.get(i).movies);
         directorHolder.firstName.setText(director.getFirstName());
         directorHolder.lastName.setText(director.getLastName());
 
@@ -46,10 +47,9 @@ public class DirectorAdapter extends RecyclerView.Adapter<DirectorHolder> {
             public void onClick(View view) {
                 long directorId = director.getId();
 
-                ArrayList<Movie> movies = new ArrayList<>(DbTools.getDbContext(_context).movieDao().getByDirectorId(directorId));
-
                 Intent intent = new Intent(view.getContext(), MovieListActivity.class);
                 intent.putParcelableArrayListExtra("movies", movies);
+                intent.putExtra("directorId", directorId);
 
                 view.getContext().startActivity(intent);
             }
@@ -58,8 +58,7 @@ public class DirectorAdapter extends RecyclerView.Adapter<DirectorHolder> {
 
     @Override
     public int getItemCount() {
-        if (_data != null)
-            return _data.size();
+        if (_data != null) return _data.size();
         return 0;
     }
 }

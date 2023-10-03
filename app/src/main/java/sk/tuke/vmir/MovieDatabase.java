@@ -13,9 +13,9 @@ import sk.tuke.vmir.MovieDao;
         },
         exportSchema = true
 )
-//@Database(entities = {Movie.class, Director.class, DirectorWithMovies.class}, version = 1)
 public abstract class MovieDatabase extends RoomDatabase {
     public abstract MovieDao movieDao();
+    public abstract DirectorDao directorDao();
 
     public abstract DirectorWithMoviesDao directorWithMoviesDao();
 }

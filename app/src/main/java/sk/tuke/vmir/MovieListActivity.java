@@ -26,6 +26,9 @@ public class MovieListActivity extends AppCompatActivity {
         layoutManager = new LinearLayoutManager(this);
         Intent intent = getIntent();
         List<Movie> movies = intent.getParcelableArrayListExtra("movies");
+        Long directorId = intent.getLongExtra("directorId", 0);
+        System.out.println(" DSDS    j" + movies.size());
+        System.out.println("directorId " + directorId);
         adapter = new MovieAdapter(movies, new WeakReference<Context>(this));
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(layoutManager);
