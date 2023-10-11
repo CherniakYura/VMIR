@@ -15,6 +15,7 @@ import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -36,23 +37,35 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        recyclerView = findViewById(R.id.rv_director_view);
-        layoutManager = new LinearLayoutManager(this);
-        DbGetData taskLoadData = new DbGetData();
-        taskLoadData.execute();
-
-        context = this;
-
-        Button addButton = findViewById(R.id.add_director_button);
-        addButton.setOnClickListener(new View.OnClickListener() {
-            @Override
+        Button crashButton = new Button(this);
+        crashButton.setText("Test Crash");
+        crashButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                Director director1 = new Director("added", "click");
-                DbAddData taskAddData = new DbAddData();
-                taskAddData.execute(director1);
+                throw new RuntimeException("Test Crash"); // Force a crash
             }
         });
+
+        addContentView(crashButton, new ViewGroup.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT));
+
+//
+//        recyclerView = findViewById(R.id.rv_director_view);
+//        layoutManager = new LinearLayoutManager(this);
+//        DbGetData taskLoadData = new DbGetData();
+//        taskLoadData.execute();
+//
+//        context = this;
+//
+//        Button addButton = findViewById(R.id.add_director_button);
+//        addButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Director director1 = new Director("added", "click");
+//                DbAddData taskAddData = new DbAddData();
+//                taskAddData.execute(director1);
+//            }
+//        });
     }
 
     class DbGetData extends AsyncTask<Void, Integer, List<DirectorWithMovies>> {

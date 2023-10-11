@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "513431036867",
+    "project_id": "vmir-400520",
+    "storage_bucket": "vmir-400520.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:513431036867:android:f989c8b1d72b29ff689376",
+        "android_client_info": {
+          "package_name": "sk.tuke.vmir"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD8aLN2blZNvxcC1-Ox3juDZ-PWjX1PyVQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
